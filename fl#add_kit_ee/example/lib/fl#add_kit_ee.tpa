@@ -4,7 +4,7 @@
  * Date: 2013-11-11
  */
 
-OUTER_SPRINT fl#add_kit_ee#version "1.0.1"
+OUTER_SPRINT fl#add_kit_ee#version "1.0.2"
 
 DEFINE_ACTION_FUNCTION fl#add_kit_ee#get_row
   STR_VAR
@@ -163,7 +163,9 @@ END
 DEFINE_ACTION_FUNCTION fl#add_kit_ee
   INT_VAR
     biography = "-2"
+    fallen = 0
     briefdesc = "-2"
+    fallen_notice = "-2"
   STR_VAR
     kit_name = ""
     backstab = ""
@@ -252,32 +254,25 @@ BEGIN
       LOOKUP_IDS_SYMBOL_OF_INT class class kit_class
     END
 
-    ACTION_IF biography < "-1" OR briefdesc < "-1" BEGIN
+    ACTION_IF biography < "-1" OR briefdesc < "-1" OR fallen_notice < "-1" BEGIN
       COPY_EXISTING clastext.2da override
-        PATCH_IF biography < "-1" BEGIN
-          LPF fl#add_kit_ee#get_2da_value
-            STR_VAR
-              row = EVAL "%class%"
-              column = biography
-              req_column_count = 8
-            RET
-              biography = value
-          END
-        END
-        PATCH_IF briefdesc < "-1" BEGIN
-          LPF fl#add_kit_ee#get_2da_value
-            STR_VAR
-              row = EVAL "%class%"
-              column = briefdesc
-              req_column_count = 8
-            RET
-              briefdesc = value
+        PATCH_FOR_EACH column IN biography briefdesc fallen_notice BEGIN
+          PATCH_IF EVAL "%column%" < "-1" BEGIN
+            LPF fl#add_kit_ee#get_2da_value
+              STR_VAR
+                row = EVAL "%class%"
+                column
+                req_column_count = 8
+              RET
+                value
+            END
+            SET EVAL "%column%" = value
           END
         END
       BUT_ONLY
     END
 
-    OUTER_SPRINT clastext "%kit_name% %kit_class% %kit_number% %kit_lower% %kit_desc% %kit_mixed% %biography% 0 %briefdesc%"
+    OUTER_SPRINT clastext "%kit_name% %kit_class% %kit_number% %kit_lower% %kit_desc% %kit_mixed% %biography% %fallen% %briefdesc% %fallen_notice%"
     APPEND clastext.2da "%clastext%" UNLESS "%kit_name%"
 
     ACTION_FOR_EACH item IN

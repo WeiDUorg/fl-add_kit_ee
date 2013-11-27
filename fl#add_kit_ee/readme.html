@@ -35,7 +35,9 @@
           <p>Integer variables:</p>
           <ul>
             <li><code>biography</code> : optional : string reference</li>
+            <li><code>fallen</code> : optional : 0 or 1</li>
             <li><code>briefdesc</code> : optional : string reference</li>
+            <li><code>fallen_notice</code> : optional : string reference</li>
           </ul>
           <p>String variables:</p>
           <ul>
@@ -56,11 +58,15 @@
             variables, the corresponding value of the parent class is
             copied and used for this kit.</p>
 
-          <p>None of the 2DA strings should include the kit name. It will be included automatically as appropriate.</p>
+          <p>None of the 2DA strings should include the kit name. It
+            will be included automatically as appropriate.</p>
 
-          <p>The variables <code>biography</code> and <code>briefdesc</code> are used in the file clastext.2da.</p>
+          <p>The variables <code>biography</code>, <code>fallen</code>,
+            <code>briefdesc</code> and <code>fallen_notice</code> are
+            used in the file clastext.2da.</p>
 
-          <p>If <code>hpclass</code> references a custom 2DA file, it needs to be copied into the game separately.</p>
+          <p>If <code>hpclass</code> references a custom 2DA file, it
+            needs to be copied into the game separately.</p>
 
           <p>The
             variables <code>backstab</code>, <code>thiefskl</code>
@@ -70,6 +76,13 @@
       </ol>
 
       <h4>Version history</h4>
+      <p>v1.0.2:</p>
+      <ul>
+        <li>Additional examples.</li>
+        <li>Âdd <code>fallen</code> variable.</li>
+        <li>Account for FALLEN_NOTICE in clastext.2da</li>
+      </ul>
+
       <p>v1.0.1:</p>
       <ul>
         <li>Fix a mistyped variable name.</li>

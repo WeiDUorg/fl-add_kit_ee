@@ -38,7 +38,47 @@ LAF fl#add_kit_ee
     clasiskl = "" // Inherit from parent class
                   // clasthac is omitted and thus also inherited
                   // As is thiefscl
-                  // As is hpclass
-                  // As is clsrcreq
+                  // And so on
 END
 
+/*
+ * As another example, if we don't care for the new stuff and just
+ * to make the kit compatible with BG(2)EE, we could simply use this:
+
+ LAF fl#add_kit_ee STR_VAR kit_name = flrustle END
+
+ * As you can infer from the documentation, all variables except
+ * kit_name can be omitted. The values for these variables will be
+ * inherited from the parent class. This is the case for all the old
+ * kits from the original BG2 and BG2: ToB, for example.
+ */
+
+/*
+ * As yet another example, if we don't want to omit any variables,
+ * our function call could look like this:
+
+ LAF fl#add_kit_ee
+   INT_VAR
+     biography = RESOLVE_STR_REF (~You grew up rustling chickens. It was a poultry childhood.~)
+     briefdesc = RESOLVE_STR_REF (~CHICKENRUSTLER: Not much of a thief, but the chickenrustler learns to fight pretty well due to frequently getting into scraps over <PRO_HISHER> chickenrustling ways.~)
+     fallen = 0
+     fallen_notice = ~-1~
+   STR_VAR
+     kit_name = flrustle
+     backstab = ~1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1~
+     clswpbon = ~1 0 3~
+     numwslot = ~2~
+     thiefskl = ~40 20~
+     traplimt = ~6~
+     clascolr = ~35 67 67 25 80~
+     clasiskl = ~0 0 0 0 0 0 0~
+     clasthac = ~0~
+     thiefscl = ~100 100 100 100 100 100 100 0~
+     hpclass  = ~hprog~
+     clsrcreq = ~1 1 1 1 1 1 1~
+ END
+
+ * Note that there is absolutely no need to provide a variable unless
+ * you want it to be different from the corresponding value of the
+ * parent class.
+ */
