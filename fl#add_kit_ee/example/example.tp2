@@ -22,25 +22,25 @@ ADD_KIT ~flrustle~
   SAY ~chickenrustler~
   SAY ~Chickenrustler~
   SAY ~CHICKENRUSTLER: kit description~
-
-LAF fl#add_kit_ee
-  INT_VAR
-    biography = 15883 // Normal biography for thieves
-    briefdesc = RESOLVE_STR_REF (~CHICKENRUSTLER: Not much of a thief, but the chickenrustler learns to fight pretty well due to frequently getting into scraps over <PRO_HISHER> chickenrustling ways.~)
-  STR_VAR
-    kit_name = flrustle
-    backstab = ~1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1~
-    clswpbon = ~1 0 3~
-    numwslot = 2
-    thiefskl = ~40 20~
-    traplimt = 6
-    clascolr = ~35 67 67 25 80~
-    clasiskl = "" // Inherit from parent class
-                  // clasthac is omitted and thus also inherited
-                  // As is thiefscl
-                  // And so on
+IF GAME_IS ~bgee bg2ee~ BEGIN //this is to quarantee the compatibility with all the BG2 engines 
+  LAF fl#add_kit_ee
+    INT_VAR
+      biography = 15883 // Normal biography for thieves
+      briefdesc = RESOLVE_STR_REF (~CHICKENRUSTLER: Not much of a thief, but the chickenrustler learns to fight pretty well due to frequently getting into scraps over <PRO_HISHER> chickenrustling ways.~)
+    STR_VAR
+      kit_name = flrustle
+      backstab = ~1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1~
+      clswpbon = ~1 0 3~
+      numwslot = 2
+      thiefskl = ~40 20~
+      traplimt = 6
+      clascolr = ~35 67 67 25 80~
+      clasiskl = "" // Inherit from parent class
+                    // clasthac is omitted and thus also inherited
+                    // As is thiefscl
+                    // And so on
+  END
 END
-
 /*
  * As another example, if we don't care for the new stuff and just
  * to make the kit compatible with BG(2)EE, we could simply use this:
