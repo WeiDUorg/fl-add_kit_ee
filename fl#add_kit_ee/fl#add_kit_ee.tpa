@@ -181,6 +181,8 @@ BEGIN
   ACTION_IF GAME_IS ~bgee bg2ee~ BEGIN
     PRINT "Doing EE-type kit extensions for kit %kit_name%"
 
+    OUTER_SET kit_number = "-1"
+
     COPY_EXISTING kitlist.2da override
       READ_2DA_ENTRIES_NOW kitlist 9
       FOR (i = 0; i < kitlist; ++i) BEGIN
@@ -195,7 +197,7 @@ BEGIN
       END
     BUT_ONLY
 
-    ACTION_IF !VARIABLE_IS_SET kit_number BEGIN
+    ACTION_IF kit_number < 0 BEGIN
       FAIL ~ERROR: the kit %kit_name% was not found in kitlist.2da~
     END
 
