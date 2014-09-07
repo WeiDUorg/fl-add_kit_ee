@@ -2,10 +2,10 @@
  * fl#add_kit_ee - An ADD_KIT supplement for EE-type games
  * Author: Fredrik Lindgren, a.k.a., Wisp
  * Licence: public domain
- * Date: 2013-11-11
+ * Date: 2014-09-07
  */
 
-OUTER_SPRINT fl#add_kit_ee#version "1.0.3"
+OUTER_SPRINT fl#add_kit_ee#version "1.0.4"
 
 DEFINE_ACTION_FUNCTION fl#add_kit_ee#get_row
   STR_VAR
