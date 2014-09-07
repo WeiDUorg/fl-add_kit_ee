@@ -136,6 +136,7 @@ DEFINE_PATCH_FUNCTION fl#add_kit_ee#get_2da_value
     row = ""
     column = ""
     req_column_count = 2
+    value = ""
   RET
     value
 BEGIN
@@ -154,9 +155,6 @@ BEGIN
         END
       END
     END
-  END
-  PATCH_IF !VARIABLE_IS_SET value BEGIN
-    PATCH_FAIL "ERROR: fl#add_kit_ee#get_2da_value could not find row %row% and column %column% with %req_column_count% required columns"
   END
 END
 
@@ -268,7 +266,12 @@ BEGIN
       BUT_ONLY
     END
 
-    OUTER_SPRINT clastext "%kit_name% %kit_class% %kit_number% %kit_lower% %kit_desc% %kit_mixed% %biography% %fallen% %briefdesc% %fallen_notice%"
+    OUTER_SPRINT clastext "%kit_name% %kit_class% %kit_number% %kit_lower% %kit_desc% %kit_mixed% %biography% %fallen% %briefdesc%"
+
+    ACTION_IF FILE_CONTAINS_EVALUATED (clastext.2da "FALLEN_NOTICE") BEGIN
+      OUTER_SPRINT clastext "%clastext% %fallen_notice%"
+    END
+
     APPEND clastext.2da "%clastext%" UNLESS "%kit_name%"
 
     ACTION_FOR_EACH item IN
