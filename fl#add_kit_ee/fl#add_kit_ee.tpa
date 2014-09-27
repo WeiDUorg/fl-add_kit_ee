@@ -268,7 +268,7 @@ BEGIN
     ACTION_IF biography < "-1" OR briefdesc < "-1" OR fallen_notice < "-1" BEGIN
       COPY_EXISTING clastext.2da override
         PATCH_FOR_EACH column IN biography briefdesc fallen_notice BEGIN
-          PATCH_IF EVAL "%column%" < "-1" BEGIN
+          PATCH_IF EVAL "%column%" < "-1" AND FILE_CONTAINS_EVALUATED (clastext.2da "%column%") BEGIN
             LPF fl#add_kit_ee#get_2da_value
               STR_VAR
                 row = EVAL "%class%"
