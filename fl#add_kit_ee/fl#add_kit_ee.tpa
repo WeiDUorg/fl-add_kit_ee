@@ -116,19 +116,27 @@ DEFINE_ACTION_FUNCTION fl#add_kit_ee#validate
     clasiskl = ""
     clasthac = ""
     thiefscl = ""
+    sneakatt = ""
+    crippstr = ""
   RET
     backstab
     thiefskl
     traplimt
+    sneakatt
+    crippstr
 BEGIN
   ACTION_IF kit_class != 4 AND ("%backstab%" STR_CMP "" OR
                                 "%thiefskl%" STR_CMP "" OR
-                                "%traplimt%" STR_CMP "")
+                                "%traplimt%" STR_CMP "" OR
+                                "%sneakatt%" STR_CMP "" OR
+                                "%crippstr%" STR_CMP "")
   BEGIN
-    WARN ~WARNING: the arguments backstab, thiefskl and traplimt should only be provided for thief kits~
+    WARN ~WARNING: the arguments for thief-only 2DAs should only be provided for thief kits~
     OUTER_SPRINT backstab ""
     OUTER_SPRINT thiefskl ""
     OUTER_SPRINT traplimt ""
+    OUTER_SPRINT sneakatt ""
+    OUTER_SPRINT crippstr ""
   END
 END
 
@@ -178,6 +186,8 @@ DEFINE_ACTION_FUNCTION fl#add_kit_ee
     clasiskl = ""
     clasthac = ""
     thiefscl = ""
+    sneakatt = ""
+    crippstr = ""
 BEGIN
   ACTION_IF GAME_IS ~bgee bg2ee~ BEGIN
     PRINT "Doing EE-type kit extensions for kit %kit_name%"
@@ -219,10 +229,14 @@ BEGIN
         clasiskl
         clasthac
         thiefscl
+        sneakatt
+        crippstr
       RET
         backstab
         thiefskl
         traplimt
+        sneakatt
+        crippstr
     END
 
     COPY_EXISTING kitlist.2da override
@@ -285,18 +299,22 @@ BEGIN
                     numwslot
                     thiefskl
                     traplimt
+                    sneakatt
+                    crippstr
     BEGIN
-      ACTION_IF FILE_CONTAINS_EVALUATED ("%item%.2da" "^[ %TAB%]*%class%[ %TAB%]+") BEGIN
-        OUTER_SPRINT clone "%class%"
-      END ELSE BEGIN
-        OUTER_SPRINT clone ""
-      END
-      LAF fl#add_kit_ee#add_row
-        STR_VAR
-          kit_name
-          input = EVAL EVAL "%%item%%"
-          file = EVAL "%item%"
-          clone
+      ACTION_IF FILE_EXISTS_IN_GAME "%item%.2da" BEGIN
+        ACTION_IF FILE_CONTAINS_EVALUATED ("%item%.2da" "^[ %TAB%]*%class%[ %TAB%]+") BEGIN
+          OUTER_SPRINT clone "%class%"
+        END ELSE BEGIN
+          OUTER_SPRINT clone ""
+        END
+        LAF fl#add_kit_ee#add_row
+          STR_VAR
+            kit_name
+            input = EVAL EVAL "%%item%%"
+            file = EVAL "%item%"
+            clone
+        END
       END
     END
 
@@ -306,12 +324,14 @@ BEGIN
                     clasthac
                     thiefscl
     BEGIN
-      LAF fl#add_kit_ee#add_column
-        STR_VAR
-          kit_name
-          input = EVAL EVAL "%%item%%"
-          file = EVAL "%item%"
-          clone = EVAL "%class%"
+      ACTION_IF FILE_EXISTS_IN_GAME "%item%.2da" BEGIN
+        LAF fl#add_kit_ee#add_column
+          STR_VAR
+            kit_name
+            input = EVAL EVAL "%%item%%"
+            file = EVAL "%item%"
+            clone = EVAL "%class%"
+        END
       END
     END
 
@@ -329,10 +349,14 @@ BEGIN
                     thiefskl
                     traplimt
                     kitlist
+                    sneakatt
+                    crippstr
     BEGIN
-      COPY_EXISTING "%file%.2da" override
-        PRETTY_PRINT_2DA
-      BUT_ONLY
+      ACTION_IF FILE_EXISTS_IN_GAME "%file%.2da" BEGIN
+        COPY_EXISTING "%file%.2da" override
+          PRETTY_PRINT_2DA
+        BUT_ONLY
+      END
     END
   END
 END
