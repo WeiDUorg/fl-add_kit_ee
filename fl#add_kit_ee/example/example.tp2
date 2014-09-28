@@ -57,6 +57,8 @@ END
  * As yet another example, if we don't want to omit any variables,
  * our function call could look like this:
 
+ * NB: sneakatt and crippstr are not included at this time.
+
  LAF fl#add_kit_ee
    INT_VAR
      biography = RESOLVE_STR_REF (~You grew up rustling chickens. It was a poultry childhood.~)
