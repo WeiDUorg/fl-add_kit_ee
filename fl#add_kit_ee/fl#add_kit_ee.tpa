@@ -291,17 +291,26 @@ BEGIN
 
     APPEND clastext.2da "%clastext%" UNLESS "%kit_name%"
 
-    ACTION_FOR_EACH item IN
-                    backstab
-                    clsrcreq
-                    clswpbon
-                    hpclass
-                    numwslot
-                    thiefskl
-                    traplimt
-                    sneakatt
-                    crippstr
-    BEGIN
+    ACTION_DEFINE_ARRAY row_files BEGIN
+      backstab
+      clsrcreq
+      clswpbon
+      hpclass
+      numwslot
+      thiefskl
+      traplimt
+      sneakatt
+      crippstr
+    END
+
+    ACTION_DEFINE_ARRAY col_files BEGIN
+      clascolr
+      clasiskl
+      clasthac
+      thiefscl
+    END
+
+    ACTION_PHP_EACH row_files AS _ => item BEGIN
       ACTION_IF FILE_EXISTS_IN_GAME "%item%.2da" BEGIN
         ACTION_IF FILE_CONTAINS_EVALUATED ("%item%.2da" "^[ %TAB%]*%class%[ %TAB%]+") BEGIN
           OUTER_SPRINT clone "%class%"
@@ -318,12 +327,7 @@ BEGIN
       END
     END
 
-    ACTION_FOR_EACH item IN
-                    clascolr
-                    clasiskl
-                    clasthac
-                    thiefscl
-    BEGIN
+    ACTION_PHP_EACH col_files AS _ => item BEGIN
       ACTION_IF FILE_EXISTS_IN_GAME "%item%.2da" BEGIN
         LAF fl#add_kit_ee#add_column
           STR_VAR
@@ -335,23 +339,19 @@ BEGIN
       END
     END
 
-    ACTION_FOR_EACH file IN
-                    backstab
-                    clascolr
-                    clasiskl
-                    clastext
-                    clasthac
-                    clsrcreq
-                    clswpbon
-                    hpclass
-                    numwslot
-                    thiefscl
-                    thiefskl
-                    traplimt
-                    kitlist
-                    sneakatt
-                    crippstr
-    BEGIN
+    ACTION_DEFINE_ARRAY cleanup BEGIN kitlist END
+    OUTER_SET index = 1
+
+    ACTION_PHP_EACH row_files AS _ => file BEGIN
+      OUTER_SPRINT $cleanup("%index%") "%file%"
+      OUTER_SET ++index
+    END
+    ACTION_PHP_EACH col_files AS _ => file BEGIN
+      OUTER_SPRINT $cleanup("%index%") "%file%"
+      OUTER_SET ++index
+    END
+
+    ACTION_PHP_EACH cleanup AS _ => file BEGIN
       ACTION_IF FILE_EXISTS_IN_GAME "%file%.2da" BEGIN
         COPY_EXISTING "%file%.2da" override
           PRETTY_PRINT_2DA
