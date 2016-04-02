@@ -2,10 +2,10 @@
  * fl#add_kit_ee - An ADD_KIT supplement for EE-type games
  * Author: Fredrik Lindgren, a.k.a., Wisp
  * Licence: public domain
- * Date: 2014-09-28
+ * Date: 2016-04-02
  */
 
-OUTER_SPRINT fl#add_kit_ee#version "1.1.1"
+OUTER_SPRINT fl#add_kit_ee#version "1.1.2"
 
 DEFINE_ACTION_FUNCTION fl#add_kit_ee#get_row
   STR_VAR
@@ -225,7 +225,7 @@ DEFINE_ACTION_FUNCTION fl#add_kit_ee
     sneakatt = ""
     crippstr = ""
 BEGIN
-  ACTION_IF GAME_IS ~bgee bg2ee iwdee~ BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME monkfist.2da BEGIN // "Rule" file as-of-yet unique to EE games
     PRINT "Doing EE-type kit extensions for kit %kit_name%"
 
     OUTER_SET kit_number = "-1"
