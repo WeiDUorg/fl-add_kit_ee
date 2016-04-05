@@ -325,6 +325,10 @@ BEGIN
     END
 
     APPEND clastext.2da "%clastext%" UNLESS "%kit_name%"
+    
+    ACTION_IF FILE_EXISTS_IN_GAME ~sodcltxt.2da~ BEGIN
+      APPEND sodcltxt.2da "%clastext%" UNLESS "%kit_name%"
+    END
 
     ACTION_DEFINE_ARRAY row_files BEGIN
       backstab
