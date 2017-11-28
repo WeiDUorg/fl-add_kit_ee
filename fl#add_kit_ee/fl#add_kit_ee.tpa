@@ -234,7 +234,7 @@ DEFINE_PATCH_MACRO fl#add_kit_ee#validate_kitlist_values BEGIN
 END
 
 DEFINE_PATCH_MACRO fl#add_kit_ee#validate_kitids_value BEGIN
-  PATCH_IF !"%number%" STRING_MATCHES_REGEXP "0x\([0-9]+\)" = 0 BEGIN
+  PATCH_IF !"%number%" STRING_MATCHES_REGEXP "0x\([0-9a-f]+\)" = 0 BEGIN
     PATCH_FAIL ~ERROR: fl#add_kit_ee could not read a valid kit number for %kit_name% from kit.ids~
   END
 END
@@ -330,12 +330,12 @@ BEGIN
         BUT_ONLY
       END
       INNER_PATCH_SAVE kitids "%number%" BEGIN
-        REPLACE_TEXTUALLY "0x\([0-9]+\)" "0x0000\1"
+        REPLACE_TEXTUALLY "0x\([0-9a-f]+\)" "0x0000\1"
       END
       SPRINT w "[ %TAB%]+"
       SPRINT ow "[ %TAB%]*"
       SPRINT d "[0-9]+"
-      SPRINT h "[0-9x]+"
+      SPRINT h "0x[0-9a-f]+"
       REPLACE_TEXTUALLY ~\(%d%%w%%kit_name%%w%%d%%w%%d%%w%%d%%w%.+%w%%d%%w%%h%%w%%d%%ow%$\)~ ~\1 %kitids%~
     BUT_ONLY
 
