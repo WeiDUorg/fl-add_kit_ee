@@ -394,7 +394,19 @@ BEGIN
       BUT_ONLY
     END
 
-    OUTER_SPRINT clastext "%kit_name% %kit_class% %kit_number% %kit_lower% %kit_desc% %kit_mixed% %biography% %fallen% %briefdesc%"
+    OUTER_SPRINT clastext ""
+    ACTION_FOR_EACH var IN kit_name
+                           kit_class
+                           kit_number
+                           kit_lower
+                           kit_desc
+                           kit_mixed
+                           biography
+                           fallen
+                           briefdesc
+    BEGIN
+      OUTER_SPRINT clastext EVAL "%clastext% %%var%%"
+    END
 
     ACTION_IF FILE_CONTAINS_EVALUATED (clastext.2da "FALLEN_NOTICE") BEGIN
       OUTER_SPRINT clastext "%clastext% %fallen_notice%"
