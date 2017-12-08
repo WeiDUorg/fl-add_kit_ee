@@ -167,11 +167,17 @@ DEFINE_ACTION_FUNCTION fl#add_kit_ee#validate
     sneakatt
     crippstr
 BEGIN
-  ACTION_IF kit_class != 4 AND ("%backstab%" STR_CMP "" OR
-                                "%thiefskl%" STR_CMP "" OR
-                                "%traplimt%" STR_CMP "" OR
-                                "%sneakatt%" STR_CMP "" OR
-                                "%crippstr%" STR_CMP "")
+  ACTION_IF ((kit_class != 4)  AND 
+             (kit_class != 9)  AND 
+             (kit_class != 10) AND 
+             (kit_class != 13) AND 
+             (kit_class != 15))     
+             AND 
+             ("%backstab%" STR_CMP "" OR
+              "%thiefskl%" STR_CMP "" OR
+              "%traplimt%" STR_CMP "" OR
+              "%sneakatt%" STR_CMP "" OR
+              "%crippstr%" STR_CMP "")
   BEGIN
     WARN ~WARNING: the arguments for thief-only 2DAs should only be provided for thief kits~
     OUTER_SPRINT backstab ""
