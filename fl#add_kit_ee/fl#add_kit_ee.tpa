@@ -472,8 +472,15 @@ BEGIN
       END
     END
 
-    ACTION_DEFINE_ARRAY cleanup BEGIN kitlist END
-    OUTER_SET index = 1
+    OUTER_SET index = 0
+    ACTION_FOR_EACH file IN kitlist
+                            clastext
+                            "%sod_clastext%"
+                            "%sod_stweapon%"
+    BEGIN
+      OUTER_SPRINT $cleanup("%index%") "%file%"
+      OUTER_SET ++index
+    END
 
     ACTION_PHP_EACH row_files AS _ => file BEGIN
       OUTER_SPRINT $cleanup("%index%") "%file%"
@@ -483,8 +490,6 @@ BEGIN
       OUTER_SPRINT $cleanup("%index%") "%file%"
       OUTER_SET ++index
     END
-    OUTER_SPRINT $cleanup("%index%") "%sod_stweapon%"
-    OUTER_SET ++index
 
     ACTION_PHP_EACH cleanup AS _ => file BEGIN
       ACTION_IF FILE_EXISTS_IN_GAME "%file%.2da" BEGIN
