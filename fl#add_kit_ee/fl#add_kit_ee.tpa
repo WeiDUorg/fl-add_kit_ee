@@ -5,7 +5,7 @@
  * Date: 2017-10-21
  */
 
-OUTER_SPRINT fl#add_kit_ee#version "1.1.4"
+OUTER_SPRINT fl#add_kit_ee#version "1.1.5"
 
 DEFINE_ACTION_FUNCTION fl#add_kit_ee#get_row
   STR_VAR
