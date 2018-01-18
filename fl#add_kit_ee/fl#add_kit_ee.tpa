@@ -63,7 +63,7 @@ DEFINE_ACTION_FUNCTION fl#add_kit_ee#add_row
 BEGIN
   ACTION_IF "%input%" STR_CMP "" BEGIN
     OUTER_SPRINT append "%kit_name% %input%"
-    APPEND "%file%.2da" "%append%" UNLESS "%kit_name%"
+    APPEND "%file%.2da" "%append%" UNLESS "[ %TAB%]+%kit_name%[ %TAB%]+"
   END ELSE ACTION_IF "%clone%" STR_CMP "" BEGIN
     LAF fl#add_kit_ee#get_row
       STR_VAR
@@ -73,7 +73,7 @@ BEGIN
         row
     END
     OUTER_SPRINT append "%kit_name% %row%"
-    APPEND "%file%.2da" "%append%" UNLESS "%kit_name%"
+    APPEND "%file%.2da" "%append%" UNLESS "[ %TAB%]+%kit_name%[ %TAB%]+"
   END
 END
 
@@ -86,7 +86,8 @@ DEFINE_ACTION_FUNCTION fl#add_kit_ee#add_column
 BEGIN
   ACTION_IF "%input%" STR_CMP "" BEGIN
     OUTER_SPRINT append "$ $ %kit_name% %input%"
-    APPEND_COL "%file%.2da" "%append%" UNLESS "%kit_name%"
+    APPEND_COL "%file%.2da" "%append%"
+      UNLESS "[ %TAB%%WNL%]+%kit_name%[ %TAB%%WNL%]+"
   END ELSE ACTION_IF "%clone%" STR_CMP "" BEGIN
     LAF fl#add_kit_ee#get_column
       STR_VAR
@@ -96,7 +97,8 @@ BEGIN
         column
     END
     OUTER_SPRINT append "$ $ %kit_name% %column%"
-    APPEND_COL "%file%.2da" "%append%" UNLESS "%kit_name%"
+    APPEND_COL "%file%.2da" "%append%"
+      UNLESS "[ %TAB%%WNL%]+%kit_name%[ %TAB%%WNL%]+"
   END
 END
 
@@ -412,10 +414,11 @@ BEGIN
       OUTER_SPRINT clastext "%clastext% %fallen_notice%"
     END
 
-    APPEND clastext.2da "%clastext%" UNLESS "%kit_name%"
+    APPEND clastext.2da "%clastext%" UNLESS "[ %TAB%]+%kit_name%[%TAB%]+"
 
     ACTION_IF FILE_EXISTS_IN_GAME ~%sod_clastext%.2da~ BEGIN
-      APPEND ~%sod_clastext%.2da~ "%clastext%" UNLESS "%kit_name%"
+      APPEND ~%sod_clastext%.2da~ "%clastext%"
+        UNLESS "[ %TAB%]+%kit_name%[ %TAB%]+"
     END
 
     ACTION_DEFINE_ARRAY row_files BEGIN
